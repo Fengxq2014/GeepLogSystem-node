@@ -1,0 +1,27 @@
+{
+  "name": "sheep-log",
+  "description": "",
+  "main": "",
+  "authors": [
+    "DefNed <zxcasd555888@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "PACE": "pace#^1.0.2",
+    "bootstrap": "^3.3.7",
+    "bootstrap-datetimepicker": "^0.0.11",
+    "echarts": "^3.2.3",
+    "bootstrap3-dialog": "bootstrap-dialog#^1.35.3",
+    "jqPaginator": "^1.2.0"
+  }
+}

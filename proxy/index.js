@@ -1,0 +1,1 @@
+exports.ZftLogModel = require('./zftlog');

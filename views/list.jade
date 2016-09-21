@@ -1,0 +1,100 @@
+extends layout
+
+block content
+  h2.sub-header= title
+  p 共找到#{count}条数据
+  nav: ul.pagination.pagination-demo
+  div.table-responsive
+    table.table.table-striped
+      thead
+        tr
+          th AccNo
+          th DevNo
+          th Time
+          th Class
+      tbody
+        for zftmodel in zftmodels
+          tr.zft-tr(data-accno='#{zftmodel.AccNo}',data-devno='#{zftmodel.DevNo}',data-time='#{zftmodel.Time}',data-class='#{zftmodel.Class}',data-ip='#{zftmodel.Ip}',data-level='#{zftmodel.Level}',data-description='#{zftmodel.Description}',data-label='#{zftmodel.Label}',data-ex='#{zftmodel.Exception}',data-iserrorlog='#{zftmodel.IsErrorLog}')
+            if zftmodel.IsErrorLog
+              th
+                span.glyphicon.glyphicon-remove
+                = ' '+zftmodel.AccNo
+            else
+              th
+                span.glyphicon.glyphicon-ok
+                = ' '+zftmodel.AccNo
+              th= zftmodel.DevNo
+              th= zftmodel.Time
+              th= zftmodel.Class
+    ul.pagination.pagination-demo
+block scripts
+  link(rel='stylesheet',href='/components/bootstrap3-dialog/dist/css/bootstrap-dialog.min.css')
+  script(src='/components/bootstrap3-dialog/dist/js/bootstrap-dialog.min.js')
+  script(src='/components/jqPaginator/dist/jqPaginator.min.js')
+  script.
+    var list = list || {};
+        (function () {
+            $(document).ready(function () {
+                $('##{ActiveId}').addClass('active');
+                list.click();
+                list.page();
+            });
+            list.click = function () {
+                $('.zft-tr').on('click', function (e) {
+                    var self = this,
+                        accNo = $(self).attr('data-accNo'),
+                        devNo = $(self).attr('data-devNo'),
+                        time = $(self).attr('data-Time'),
+                        clas = $(self).attr('data-class'),
+                        ip = $(self).attr('data-ip'),
+                        level = $(self).attr('data-level'),
+                        label = $(self).attr('data-label'),
+                        description = $(self).attr('data-description'),
+                        ex=$(self).attr('data-ex'),
+                        textAndPic = $('<div></div>');
+                    textAndPic.append('<b>卡号：</b>' + accNo + '</br><hr>');
+                    textAndPic.append('<b>终端号：</b>' + devNo + '</br><hr>');
+                    textAndPic.append('<b>时间：</b>' + time + '</br><hr>');
+                    textAndPic.append('<b>类名：</b>' + clas + '</br><hr>');
+                    textAndPic.append('<b>ip：</b>' + ip + '</br><hr>');
+                    textAndPic.append('<b>日志级别：</b>' + level + '</br><hr>');
+                    textAndPic.append('<b>自定义标志：</b>' + label + '</br><hr>');
+                    textAndPic.append('<b>附加信息：</b>' + description + '</br>');
+                    if ($(self).attr('data-isErrorLog') && ex) {
+                        textAndPic.append('<hr><b>异常信息：</b>' + ex + '</br>');
+                    };
+                    BootstrapDialog.show({
+                        title: '日志详情',
+                        message: textAndPic,
+                        buttons: [{
+                            label: '关闭',
+                            action: function (dialogItself) {
+                                dialogItself.close();
+                            }
+                        }],
+                        onshown: function () {
+                            $('.modal-content').css('overflow-y', 'auto');
+                        }
+                    });
+
+                });
+            };
+            list.page = function(){
+                $(".pagination-demo").jqPaginator({
+                    totalCounts: #{count},
+                    pageSize: 15,
+                    visiblePages: 10,
+                    currentPage: #{page},
+                    first: '<li class="first"><a href="?p=1">首页<\/a><\/li>',
+                    prev: '<li class="prev"><a href="?p={{page}}">上一页<\/a><\/li>',
+                    next: '<li class="next"><a href="?p={{page}}">下一页<\/a><\/li>',
+                    last: '<li class="last"><a href="?p={{totalPages}}">末页<\/a><\/li>',
+                    page: '<li class="page"><a href="?p={{page}}">{{page}}<\/a><\/li>',
+                    onPageChange: function (n) {
+                        $(".pagination-demo .disabled").each(function(){
+                            $(this).find('a').attr('href','#');
+                        })
+                    }
+                });
+            };
+        })();

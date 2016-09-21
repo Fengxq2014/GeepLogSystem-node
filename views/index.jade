@@ -1,0 +1,212 @@
+extends layout
+
+block content
+  h1.page-header= title
+  .row.placeholders
+    .col-xs-6.col-sm-6.placeholder
+      div#pad(style='height:250px')
+      h4 支付通pad
+block scripts
+  script(src='/components/echarts/dist/echarts.js')
+  script.
+    $('#1').addClass('active');
+    var myChart = echarts.init(document.getElementById('pad'));
+    var option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: ['正常日志', '异常日志']
+                },
+
+                series: [
+                    {
+                        name: '日志数量',
+                        type: 'pie',
+                        radius: ['50%', '70%'],
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        data: [
+                            { value: #{normalCount}, name: '正常日志' },
+                            { value: #{errorCount}, name: '异常日志' }
+                        ]
+                    }
+                ]
+            };
+    myChart.setOption(option);
+    // 路径配置
+    //- require.config({
+    //-     paths: {
+    //-         echarts: '../Scripts/dist'
+    //-     }
+    //- });
+    //- // 使用
+    //- require(
+    //-     [
+    //-         'echarts',
+    //-         'echarts/chart/pie' // 按需加载
+    //-     ],
+    //-     function (ec) {
+    //-         // 基于准备好的dom，初始化echarts图表
+    //-         var pad = ec.init(document.getElementById('pad'));
+    //-         var cvept = ec.init(document.getElementById('CVEPT'));
+    //-         var div3 = ec.init(document.getElementById('div3'));
+    //-         var div4 = ec.init(document.getElementById('div4'));
+
+    //-         var option = {
+    //-             tooltip: {
+    //-                 trigger: 'item',
+    //-                 formatter: "{a} <br/>{b} : {c} ({d}%)"
+    //-             },
+    //-             legend: {
+    //-                 orient: 'vertical',
+    //-                 x: 'left',
+    //-                 data: ['正常日志', '异常日志']
+    //-             },
+
+    //-             series: [
+    //-                 {
+    //-                     name: '日志数量',
+    //-                     type: 'pie',
+    //-                     radius: ['50%', '70%'],
+    //-                     itemStyle: {
+    //-                         normal: {
+    //-                             label: {
+    //-                                 show: false
+    //-                             },
+    //-                             labelLine: {
+    //-                                 show: false
+    //-                             }
+    //-                         },
+    //-                         emphasis: {
+    //-                             label: {
+    //-                                 show: true,
+    //-                                 position: 'center',
+    //-                                 textStyle: {
+    //-                                     fontSize: '30',
+    //-                                     fontWeight: 'bold'
+    //-                                 }
+    //-                             }
+    //-                         }
+    //-                     },
+    //-                     data: [
+    //-                         { value: #{ceshi}, name: '正常日志' },
+    //-                         { value: #{ceshi}, name: '异常日志' }
+    //-                     ]
+    //-                 }
+    //-             ]
+    //-         };
+
+    //-         var option1 = {
+    //-             tooltip: {
+    //-                 trigger: 'item',
+    //-                 formatter: "{a} <br/>{b} : {c} ({d}%)"
+    //-             },
+    //-             legend: {
+    //-                 orient: 'vertical',
+    //-                 x: 'left',
+    //-                 data: ['正常日志', '异常日志']
+    //-             },
+    //-             series: [
+    //-                 {
+    //-                     name: '日志数量',
+    //-                     type: 'pie',
+    //-                     legendHoverLink: false,
+    //-                     radius: '55%',
+    //-                     center: ['50%', '60%'],
+    //-                     data: [
+    //-                         { value: #{ceshi}, name: '正常日志' },
+    //-                         { value: #{ceshi}, name: '异常日志' }
+    //-                     ]
+    //-                 }
+    //-             ]
+    //-         };
+
+    //-         var option3 = {
+    //-             tooltip: {
+    //-                 trigger: 'item',
+    //-                 formatter: "{a} <br/>{b} : {c} ({d}%)"
+    //-             },
+    //-             legend: {
+    //-                 orient: 'vertical',
+    //-                 x: 'left',
+    //-                 data: ['正常日志', '异常日志']
+    //-             },
+
+    //-             series: [
+    //-                 {
+    //-                     name: '日志数量',
+    //-                     type: 'pie',
+    //-                     radius: ['50%', '70%'],
+    //-                     itemStyle: {
+    //-                         normal: {
+    //-                             label: {
+    //-                                 show: false
+    //-                             },
+    //-                             labelLine: {
+    //-                                 show: false
+    //-                             }
+    //-                         },
+    //-                         emphasis: {
+    //-                             label: {
+    //-                                 show: true,
+    //-                                 position: 'center',
+    //-                                 textStyle: {
+    //-                                     fontSize: '30',
+    //-                                     fontWeight: 'bold'
+    //-                                 }
+    //-                             }
+    //-                         }
+    //-                     },
+    //-                     data: [
+    //-                         { value: #{ceshi}, name: '正常日志' },
+    //-                         { value: #{ceshi}, name: '异常日志' }
+    //-                     ]
+    //-                 }
+    //-             ]
+    //-         };
+    //-         var option4 = {
+    //-             tooltip: {
+    //-                 trigger: 'item',
+    //-                 formatter: "{a} <br/>{b} : {c} ({d}%)"
+    //-             },
+    //-             legend: {
+    //-                 orient: 'vertical',
+    //-                 x: 'left',
+    //-                 data: ['正常日志', '异常日志']
+    //-             },
+    //-             series: [
+    //-                 {
+    //-                     name: '日志数量',
+    //-                     type: 'pie',
+    //-                     legendHoverLink: false,
+    //-                     radius: '55%',
+    //-                     center: ['50%', '60%'],
+    //-                     data: [
+    //-                         { value: #{ceshi}, name: '正常日志' },
+    //-                         { value: #{ceshi}, name: '异常日志' }
+    //-                     ]
+    //-                 }
+    //-             ]
+    //-         };
+    //-         // 为echarts对象加载数据
+    //-         pad.setOption(option);
+    //-         cvept.setOption(option1);
+    //-         div3.setOption(option3);
+    //-         div4.setOption(option4);
+    //-     }
+    //- );
